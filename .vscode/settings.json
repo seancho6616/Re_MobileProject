@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "MobileProject.sln"
+    "dotnet.defaultSolution": "Re_MobileProject.sln"
 }
