@@ -105,11 +105,11 @@ public class PlayerControl : MonoBehaviour
             movement = Vector3.zero;
             ani.SetTrigger("Action");
             
+            playerStats.MaxStamina += 25f;    
             // playerStats 데이터 직접 사용
             if(playerStats.MaxStamina > playerStats.CurrentStamina)
             {
                 playerStats.CurrentStamina += 25f;
-                playerStats.MaxStamina += 25f;    
                 playerStemina.UpdateStamina();
             }
             pickupStamina = false;
