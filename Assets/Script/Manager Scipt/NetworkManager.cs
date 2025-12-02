@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     public bool isContinue = false;
 
     [Header("Network Settings")]
-    private string baseUrl = "http://localhost:3000/api"; 
+    private string baseUrl = "http://10.20.35.109:3000/api"; 
     public string authToken; 
 
     void Awake()
