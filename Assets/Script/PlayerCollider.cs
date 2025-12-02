@@ -81,6 +81,7 @@ public class PlayerCollider : MonoBehaviour
         switch (nearbyItem.itemState.itemType)
         {
             case ItemState.Item.Coin:
+                nearbyItem.PlaySound();
                 playerStats.CoinCount += 1;
                 // UI 갱신
                 textUI.CountCoin(playerStats.CoinCount);
