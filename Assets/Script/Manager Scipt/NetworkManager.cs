@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     public bool isContinue = false;
 
     [Header("Network Settings")]
-    private string baseUrl = "http://10.20.32.192:3000/api"; 
+    private string baseUrl = "http://localhost:3000/api"; 
     public string authToken; 
 
     void Awake()
@@ -22,7 +22,7 @@ public class NetworkManager : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
-    //1. 핵심 기능
+    // 1. 핵심 기능 (회원가입, 로그인, 저장, 로드)
 
     public IEnumerator Register(string username, string password, string nickname, Action<bool> onResult)
     {
@@ -46,15 +46,17 @@ public class NetworkManager : MonoBehaviour
 
     public IEnumerator SaveGameData(GameData data, Action onComplete = null)
     {
-        Debug.Log("--- 2. [네트워크] 서버에 PATCH 요청 시작 ---");
+        // 토큰 확인
         if (string.IsNullOrEmpty(authToken))
         {
             Debug.LogError("[SAVE] 저장 실패: AuthToken이 없습니다. 로그인 상태를 확인하세요.");
             yield break;
         }
-        Debug.Log("[SAVE] AuthToken 확인 완료. 서버에 데이터 전송 시작...");
 
+        // 데이터를 JSON으로 변환
         string json = JsonUtility.ToJson(data);
+
+        Debug.Log("서버로 보내는 데이터: " + json);
         
         using (UnityWebRequest req = new UnityWebRequest(baseUrl + "/my-data", "PATCH"))
         {
@@ -82,13 +84,14 @@ public class NetworkManager : MonoBehaviour
     public IEnumerator LoadGameData(Action<GameData> onDataLoaded)
     {
         if (string.IsNullOrEmpty(authToken)) { onDataLoaded?.Invoke(null); yield break; }
+        
         yield return SendRequest("/my-data", "GET", null, (json) => {
             var data = JsonUtility.FromJson<GameData>(json);
             onDataLoaded?.Invoke(data);
         }, () => onDataLoaded?.Invoke(null));
     }
 
-    // 2. 통신 도우미
+    // 2. 통신 함수
     
     private IEnumerator SendRequest(string path, string method, object data, Action<string> onSuccess, Action onFail = null)
     {
@@ -122,9 +125,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    
-
-    // 데이터 클래스들
+    // 데이터 클래스
     [Serializable] class UserLoginData { public string username; public string password; }
     [Serializable] class UserRegisterData { public string username; public string password; public string nickname; }
     [Serializable] class LoginResponse { public string message; public string token; }

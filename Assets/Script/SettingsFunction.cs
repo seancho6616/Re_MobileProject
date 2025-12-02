@@ -19,14 +19,14 @@ public class SettingsFunction : MonoBehaviour
 
     void Start()
     {
-        // 1. 소리 설정 초기화
+        // 1. 소리 설정
         if (volumeSlider != null)
         {
             volumeSlider.value = AudioListener.volume; // 현재 볼륨 가져오기
             volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         }
 
-        // 2. 컨트롤러 크기 설정 초기화
+        // 2. 컨트롤러 크기 설정
         if (sizeDropdown != null)
         {
             sizeDropdown.onValueChanged.AddListener(OnSizeChanged);

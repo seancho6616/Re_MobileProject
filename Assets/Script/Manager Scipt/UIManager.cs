@@ -1,4 +1,6 @@
- using UnityEngine;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,6 +10,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] CanvasGroup canvasInGame; // 플레이어 정보 ui 캠버스
     [SerializeField] CanvasGroup canvasGameOver; // 게임오버 캠퍼스
     
+    [Header("Game Over Buttons")] // ★ 추가: 버튼 연결용
+    public Button yesButton; 
+    public Button noButton;
+
     [Header("Settings UI")]
     [SerializeField] CanvasGroup settingDs; //설정 설명 UI
     [SerializeField] CanvasGroup programmerDs; // 프로그래머 설명 ui
@@ -19,6 +25,9 @@ public class UIManager : MonoBehaviour
         canvasSetting.alpha = 0f;
         canvasPlayer.alpha = 1f;
         canvasInGame.alpha = 1f;
+
+        if (yesButton != null) yesButton.onClick.AddListener(OnClickYes);
+        if (noButton != null) noButton.onClick.AddListener(OnClickNo);
     }
 
     public void OnClickShowSetting()
@@ -39,10 +48,32 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickGameOver()
     {
-        ShowCanvas(canvasGameOver);
         HidCanvas(canvasPlayer);
         HidCanvas(canvasInGame);
         HidCanvas(canvasSetting);
+        ShowCanvas(canvasGameOver);
+    }
+
+    public void OnClickYes()
+    {
+        Sound.instance.PlayClick();
+        Debug.Log("재시작");
+        Time.timeScale = 1f; 
+
+        if (GameDataStore.Instance != null)
+        {
+            GameDataStore.Instance.isContinue = false;
+            GameDataStore.Instance.cachedData = null;
+        }
+        SceneManager.LoadScene("MainScene");
+    }
+
+    public void OnClickNo()
+    {
+        Sound.instance.PlayClick();
+        Debug.Log("게임 나가기");
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene("StartScene");
     }
 
     public void OnKeyGuide()

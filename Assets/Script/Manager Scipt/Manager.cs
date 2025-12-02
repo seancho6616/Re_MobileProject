@@ -73,9 +73,11 @@ public class Manager : MonoBehaviour
             onComplete?.Invoke(); // 실패해도 다음 동작 진행을 위해 호출
             return;
         }
+        GameData data = new GameData();
+        data.hasPlayed = true;
 
         Debug.Log("--- 게임 데이터 저장 시작 ---");
-        GameData data = new GameData();
+        
 
         // 1. 위치 정보 저장
         data.position = new PositionData(
