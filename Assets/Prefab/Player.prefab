@@ -6027,9 +6027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf1389c8f965ea46a60ef8264dd0d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  MoveSpeed: 5
   maxHealth: 16
   currentHealth: 16
-  MoveSpeed: 5
   maxStamina: 100
   currentStamina: 100
   weaponId: 0
@@ -6052,6 +6052,7 @@ MonoBehaviour:
   pickupHeart: 0
   pickupDisHeart: 0
   pickupStamina: 0
+  pickupChest: 0
   isWeapon: 0
   checkMonster: {fileID: 1832417703996538551}
   isMonster: 0
@@ -6093,7 +6094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeartManager
   heartPrefab: {fileID: 6854739120239944674, guid: 50754816001803b47a4d1fa1a3782f00, type: 3}
-  parentUI: {fileID: 6561856126980351506, guid: 50754816001803b47a4d1fa1a3782f00, type: 3}
+  parentUI: {fileID: 0}
 --- !u!114 &2828439369549403557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6130,6 +6131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262af21f7fa7209448c6b61248f7c0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  menuBGM: {fileID: 0}
+  mainBGM: {fileID: 0}
 --- !u!82 &7862222261994464415
 AudioSource:
   m_ObjectHideFlags: 0

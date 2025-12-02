@@ -19,7 +19,7 @@ public class Manager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
 
-        // [자동 플레이어 찾기 로직 추가]
+        // 자동 플레이어 찾기
         if (player == null)
         {
             // 1. "Player" 태그로 찾아보기
