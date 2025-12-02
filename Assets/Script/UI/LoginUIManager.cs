@@ -58,6 +58,7 @@ public class LoginUIManager : MonoBehaviour
     // 로그인 요청
     void OnLoginClick()
     {
+        Sound.instance.PlayClick();
         string id = loginIdInput.text;
         string pw = loginPwInput.text;
 
@@ -80,6 +81,7 @@ public class LoginUIManager : MonoBehaviour
     // 회원가입 요청
     void OnRegisterSubmitClick()
     {
+        Sound.instance.PlayClick();
         string id = regIdInput.text;
         string pw = regPwInput.text;
         string nick = regNickInput.text;

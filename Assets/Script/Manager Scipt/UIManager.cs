@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickShowSetting()
     {
+        Sound.instance.PlayClick();
         Time.timeScale = 0f;
         HidCanvas(canvasPlayer);
         HidCanvas(canvasInGame);
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickHideSetting()
     {
+        Sound.instance.PlayClick();
         Time.timeScale = 1f;
         HidCanvas(canvasSetting);
         ShowCanvas(canvasInGame);
@@ -36,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     public void OnKeyGuide()
     {
+        Sound.instance.PlayClick();
         ShowCanvas(keyDs);
         HidCanvas(soundDs);
         HidCanvas(programmerDs);
@@ -43,6 +46,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnSound()
     {
+        Sound.instance.PlayClick();
         ShowCanvas(soundDs);
         HidCanvas(keyDs);
         HidCanvas(programmerDs);
@@ -50,6 +54,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnProgrammer()
     {
+        Sound.instance.PlayClick();
         ShowCanvas(programmerDs);
         HidCanvas(soundDs);
         HidCanvas(keyDs);
@@ -57,6 +62,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnSetting()
     {
+        Sound.instance.PlayClick();
         ShowCanvas(settingDs);
         HidCanvas(soundDs);
         HidCanvas(programmerDs);
@@ -65,6 +71,7 @@ public class UIManager : MonoBehaviour
 
     void ShowCanvas(CanvasGroup can) // 캔버스 활성화
     {
+        Sound.instance.PlayClick();
         can.alpha = 1f;
         can.interactable = true;
         can.blocksRaycasts = true;
@@ -72,6 +79,7 @@ public class UIManager : MonoBehaviour
 
     void HidCanvas(CanvasGroup can) // 캔버스 비활성화
     {
+        Sound.instance.PlayClick();
         can.alpha = 0f;
         can.interactable = false;
         can.blocksRaycasts = false;

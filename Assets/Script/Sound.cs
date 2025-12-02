@@ -3,12 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class Sound : MonoBehaviour
 {
-    private static Sound instance; // 싱글톤 인스턴스
+    public static Sound instance; // 싱글톤 인스턴스
     private AudioSource audioSource;
 
     [Header("BGM Clips")]
     public AudioClip menuBGM; // 로그인 & 시작 화면용 음악
     public AudioClip mainBGM; // 메인 게임용 음악
+    public AudioClip clickSound; // 클릭 button
 
     void Awake()
     {
@@ -65,6 +66,14 @@ public class Sound : MonoBehaviour
         if (audioSource != null && !audioSource.isPlaying)
         {
             audioSource.Play();
+        }
+    }
+
+    public void PlayClick()
+    {
+        if (audioSource != null && clickSound != null)
+        {
+            audioSource.PlayOneShot(clickSound); 
         }
     }
 }

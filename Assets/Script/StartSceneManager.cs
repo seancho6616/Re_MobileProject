@@ -6,6 +6,7 @@ public class StartSceneManager : MonoBehaviour
     // 이어하기
     public void OnClickContinue()
     {
+        Sound.instance.PlayClick();
         Debug.Log("이어하기 시도: 서버에서 데이터를 불러옵니다...");
 
         StartCoroutine(NetworkManager.Instance.LoadGameData((data) =>
@@ -38,6 +39,7 @@ public class StartSceneManager : MonoBehaviour
     // 새 게임
     public void OnClickNewGame()
     {
+        Sound.instance.PlayClick();
         Debug.Log("새 게임 시작");
 
         if (GameDataStore.Instance != null)

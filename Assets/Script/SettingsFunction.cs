@@ -68,6 +68,7 @@ public class SettingsFunction : MonoBehaviour
     // 저장 버튼 (수동 저장)
     void OnClickSave()
     {
+        Sound.instance.PlayClick();
         if (Manager.Instance != null)
         {
             Debug.Log("[설정] 수동 저장 시도");
@@ -78,6 +79,7 @@ public class SettingsFunction : MonoBehaviour
     // 타이틀 화면으로 (자동 저장 기능 포함)
     void OnClickTitle()
     {
+        Sound.instance.PlayClick();
         Debug.Log("타이틀 버튼 클릭: 자동 저장 후 이동합니다.");
 
         // 1. 멈췄던 시간 다시 흐르게 하기 (중요!)
@@ -103,6 +105,7 @@ public class SettingsFunction : MonoBehaviour
     // 게임 종료 (자동 저장 기능 추가)
     void OnClickQuit()
     {
+        Sound.instance.PlayClick();
         Debug.Log("종료 버튼 클릭: 자동 저장 후 종료합니다.");
 
         // 1. 멈춘 시간 다시 흐르게 하기 (안전장치)

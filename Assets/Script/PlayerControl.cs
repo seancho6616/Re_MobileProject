@@ -123,6 +123,15 @@ public class PlayerControl : MonoBehaviour
             int count = playerStats.PotionCount;
 
             textUI.CountPotion(count);
+
+            if(Item != null)
+            {
+                AudioSource audio = Item.GetComponent<AudioSource>();
+                if(audio != null && audio.clip != null)
+                {
+                    AudioSource.PlayClipAtPoint(audio.clip, transform.position);
+                }
+            }
             pickupPotion = false;
             attackImageChanger.BeforeChangeSprite();
             Destroy(Item);
