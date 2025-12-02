@@ -25,7 +25,7 @@ public class PlayerControl : MonoBehaviour
     TextUI textUI;
     Renderer[] partsRenderers;
 
-    MonsterAI monsterAI;
+    public MonsterAI monsterAI;
     PlayerStemina playerStemina;
     HeartManager heartManager;
     PlayerStats playerStats;
@@ -38,7 +38,6 @@ public class PlayerControl : MonoBehaviour
         textUI = FindAnyObjectByType<TextUI>();
         partsRenderers = GetComponentsInChildren<Renderer>(true);
 
-        monsterAI = FindAnyObjectByType<MonsterAI>();
         playerStemina = GetComponent<PlayerStemina>();
         heartManager = GetComponent<HeartManager>();
         playerStats = GetComponent<PlayerStats>();
@@ -108,7 +107,7 @@ public class PlayerControl : MonoBehaviour
             if(playerStats.MaxStamina > playerStats.CurrentStamina)
             {
                 playerStats.CurrentStamina += 25f;
-                playerStats.MaxStamina = 25f;    
+                playerStats.MaxStamina += 25f;    
                 playerStemina.UpdateStamina();
             }
             pickupStamina = false;
@@ -175,11 +174,11 @@ public class PlayerControl : MonoBehaviour
         Vector3 move;
         if(movement == Vector3.zero)
         {
-            move = Vector3.forward *8f;
+            move = transform.forward *8f;
         }
         else
         {
-            move = movement*5f;
+            move = movement*8f;
         }
         rigid.AddForce(move, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);

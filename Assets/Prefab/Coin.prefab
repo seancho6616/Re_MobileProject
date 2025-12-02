@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4bc520435e95dd74da72b4cb0e55cf3c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.7923888
+      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4bc520435e95dd74da72b4cb0e55cf3c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.73
+      value: 0.78999996
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4bc520435e95dd74da72b4cb0e55cf3c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.7246335
+      value: -3.2771585
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4bc520435e95dd74da72b4cb0e55cf3c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemState: {fileID: 11400000, guid: 43b2fb81ab4083546b04c63f12aa6768, type: 2}
   rotateSpeed: 20
+  audioSource: {fileID: 0}
 --- !u!82 &8112412769303910966
 AudioSource:
   m_ObjectHideFlags: 0

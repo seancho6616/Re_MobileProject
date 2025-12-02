@@ -17,4 +17,4 @@ MonoBehaviour:
   attackDamage: 2
   moveSpeed: 2
   wanderRadius: 8
-  attackRange: 2.4
+  attackRange: 2.3
