@@ -31,6 +31,7 @@ public class PlayerControl : MonoBehaviour
     PlayerStats playerStats;
     AttackImageChanger attackImageChanger;
     PlayerWeapon playerWeapon;
+    UIManager uIManager;
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -43,6 +44,7 @@ public class PlayerControl : MonoBehaviour
         playerStats = GetComponent<PlayerStats>();
         attackImageChanger = FindAnyObjectByType<AttackImageChanger>();
         playerWeapon = GetComponent<PlayerWeapon>();
+        uIManager = FindAnyObjectByType<UIManager>();
 
         playerWeapon.ActivateWeaponID(playerStats.weaponId);
     }
@@ -213,7 +215,10 @@ public class PlayerControl : MonoBehaviour
     public void Damaged(float value)
     {
         playerStats.CurrentHealth -= value;
-       
+        if(playerStats.CurrentHealth <= 0)
+        {
+            StartCoroutine(Die());
+        }
     }
 
     public void AttackMonster()
@@ -236,6 +241,14 @@ public class PlayerControl : MonoBehaviour
     }
     public bool isMonster = false;
     
+    public IEnumerator Die()
+    {
+        ani.SetTrigger("isDie");
+        yield return new WaitForSeconds(1f);
+        uIManager.OnClickGameOver();
+        Time.timeScale = 0f;
+        
+    }
     
     public void MakeFalse()
     {

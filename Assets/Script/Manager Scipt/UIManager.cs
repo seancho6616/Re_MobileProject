@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] CanvasGroup canvasSetting; //설정들 캔버스
     [SerializeField] CanvasGroup canvasPlayer; // 플레이어 버튼 관련 캔버스
     [SerializeField] CanvasGroup canvasInGame; // 플레이어 정보 ui 캠버스
+    [SerializeField] CanvasGroup canvasGameOver; // 게임오버 캠퍼스
     
     [Header("Settings UI")]
     [SerializeField] CanvasGroup settingDs; //설정 설명 UI
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] CanvasGroup keyDs; // 키 설명 ui
     void Start()
     {
+        canvasGameOver.alpha =0f;
         canvasSetting.alpha = 0f;
         canvasPlayer.alpha = 1f;
         canvasInGame.alpha = 1f;
@@ -21,24 +23,30 @@ public class UIManager : MonoBehaviour
 
     public void OnClickShowSetting()
     {
-        Sound.instance.PlayClick();
         Time.timeScale = 0f;
+        HidCanvas(canvasGameOver);
         HidCanvas(canvasPlayer);
         HidCanvas(canvasInGame);
         ShowCanvas(canvasSetting);
     }
     public void OnClickHideSetting()
     {
-        Sound.instance.PlayClick();
         Time.timeScale = 1f;
+        HidCanvas(canvasGameOver);
         HidCanvas(canvasSetting);
         ShowCanvas(canvasInGame);
         ShowCanvas(canvasPlayer);
     }
+    public void OnClickGameOver()
+    {
+        ShowCanvas(canvasGameOver);
+        HidCanvas(canvasPlayer);
+        HidCanvas(canvasInGame);
+        HidCanvas(canvasSetting);
+    }
 
     public void OnKeyGuide()
     {
-        Sound.instance.PlayClick();
         ShowCanvas(keyDs);
         HidCanvas(soundDs);
         HidCanvas(programmerDs);
@@ -46,7 +54,6 @@ public class UIManager : MonoBehaviour
     }
     public void OnSound()
     {
-        Sound.instance.PlayClick();
         ShowCanvas(soundDs);
         HidCanvas(keyDs);
         HidCanvas(programmerDs);
@@ -54,7 +61,6 @@ public class UIManager : MonoBehaviour
     }
     public void OnProgrammer()
     {
-        Sound.instance.PlayClick();
         ShowCanvas(programmerDs);
         HidCanvas(soundDs);
         HidCanvas(keyDs);
@@ -62,16 +68,15 @@ public class UIManager : MonoBehaviour
     }
     public void OnSetting()
     {
-        Sound.instance.PlayClick();
         ShowCanvas(settingDs);
         HidCanvas(soundDs);
         HidCanvas(programmerDs);
         HidCanvas(keyDs);
     }
 
+
     void ShowCanvas(CanvasGroup can) // 캔버스 활성화
     {
-        Sound.instance.PlayClick();
         can.alpha = 1f;
         can.interactable = true;
         can.blocksRaycasts = true;
@@ -79,7 +84,6 @@ public class UIManager : MonoBehaviour
 
     void HidCanvas(CanvasGroup can) // 캔버스 비활성화
     {
-        Sound.instance.PlayClick();
         can.alpha = 0f;
         can.interactable = false;
         can.blocksRaycasts = false;
