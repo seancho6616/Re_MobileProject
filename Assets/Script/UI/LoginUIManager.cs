@@ -47,7 +47,6 @@ public class LoginUIManager : MonoBehaviour
     {
         loginPanel.SetActive(false);
         signinPanel.SetActive(true);
-        // 입력 필드 초기화
         regIdInput.text = "";
         regPwInput.text = "";
         regNickInput.text = "";
@@ -69,7 +68,6 @@ public class LoginUIManager : MonoBehaviour
         }
         else
         {
-            // 팝업 UI가 연결 안 되어 있을 때를 대비해 로그도 출력
             Debug.Log("알림: " + message);
         }
     }
@@ -92,7 +90,6 @@ public class LoginUIManager : MonoBehaviour
             return;
         }
 
-        // [수정 완료] (isSuccess, errorMsg) 2개의 인자를 받도록 처리
         StartCoroutine(NetworkManager.Instance.Login(id, pw, (isSuccess, errorMsg) =>
         {
             if (isSuccess)
@@ -102,8 +99,6 @@ public class LoginUIManager : MonoBehaviour
             }
             else
             {
-                // 실패 시 에러 메시지 팝업
-                // 서버에서 메시지가 안 왔을 경우를 대비한 기본 문구
                 if (string.IsNullOrEmpty(errorMsg)) errorMsg = "아이디 또는 비밀번호가 틀렸습니다.";
                 ShowPopup(errorMsg);
             }
@@ -124,7 +119,6 @@ public class LoginUIManager : MonoBehaviour
             return;
         }
 
-        // [수정 완료] (isSuccess, errorMsg) 2개의 인자를 받도록 처리
         StartCoroutine(NetworkManager.Instance.Register(id, pw, nick, (isSuccess, errorMsg) =>
         {
             if (isSuccess)
@@ -134,7 +128,6 @@ public class LoginUIManager : MonoBehaviour
             }
             else
             {
-                // "중복" 에러 처리 (서버 메시지 또는 코드 11000 체크)
                 if (errorMsg.Contains("중복") || errorMsg.Contains("사용 중") || errorMsg.Contains("11000"))
                 {
                     ShowPopup("이미 존재하는 아이디입니다.");

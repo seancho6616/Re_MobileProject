@@ -13,7 +13,6 @@ public class NetworkManager : MonoBehaviour
     public bool isContinue = false;
 
     [Header("Network Settings")]
-    // ★ 폰 테스트 시 localhost 대신 컴퓨터 IP 사용 (예: 192.168.0.x)
     private string baseUrl = "http://localhost:3000/api";
     public string authToken;
 
@@ -29,8 +28,6 @@ public class NetworkManager : MonoBehaviour
     {
         var data = new UserRegisterData { username = username, password = password, nickname = nickname };
 
-        // 성공 시: true와 빈 문자열 반환
-        // 실패 시: false와 에러 메시지 반환
         yield return SendRequest("/register", "POST", data,
             (json) => {
                 Debug.Log("회원가입 성공");
@@ -64,7 +61,6 @@ public class NetworkManager : MonoBehaviour
         if (string.IsNullOrEmpty(authToken)) { yield break; }
         string json = JsonUtility.ToJson(data);
 
-        // 저장의 경우 실패해도 팝업을 띄우지 않고 로그만 남기므로 onFail은 간단히 처리
         yield return SendRequest("/my-data", "PATCH", data,
             (successJson) => {
                 Debug.Log("데이터 저장 완료");
@@ -92,9 +88,6 @@ public class NetworkManager : MonoBehaviour
     }
 
     // --- 3. 통신 핵심 로직 (에러 파싱 포함) ---
-
-    // onSuccess: 성공 시 JSON 문자열 반환
-    // onFail: 실패 시 에러 메시지 문자열 반환 (Action<string>으로 변경됨)
     private IEnumerator SendRequest(string path, string method, object data, Action<string> onSuccess, Action<string> onFail = null)
     {
         string url = baseUrl + path;
@@ -121,13 +114,11 @@ public class NetworkManager : MonoBehaviour
             }
             else
             {
-                // ★ 서버 에러 메시지 파싱
                 string serverMsg = "네트워크 오류";
                 try
                 {
                     if (!string.IsNullOrEmpty(req.downloadHandler.text))
                     {
-                        // ErrorResponse 클래스 이용
                         var errorRes = JsonUtility.FromJson<ErrorResponse>(req.downloadHandler.text);
                         if (errorRes != null && !string.IsNullOrEmpty(errorRes.message))
                         {
@@ -141,13 +132,11 @@ public class NetworkManager : MonoBehaviour
                 }
 
                 Debug.LogError($"[{method}] {path} 실패: {serverMsg}");
-                // 실패 콜백에 에러 메시지 전달
                 onFail?.Invoke(serverMsg);
             }
         }
     }
 
-    // --- 데이터 클래스 정의 ---
 
     [Serializable]
     class UserLoginData
@@ -171,7 +160,6 @@ public class NetworkManager : MonoBehaviour
         public string token;
     }
 
-    // ★ 에러 파싱용 클래스 (이게 없어서 오류가 났었습니다)
     [Serializable]
     public class ErrorResponse
     {
