@@ -28,6 +28,7 @@ public class MonsterAI : MonoBehaviour
     PlayerControl playerControl;
     SkinnedMeshRenderer rendererColor;
     [SerializeField]ParticleSystem dieParticle;
+    [SerializeField]ParticleSystem damageParticle;
     [SerializeField] GameObject body;
     Color basicColor; 
     Color changeColor;
@@ -51,7 +52,7 @@ public class MonsterAI : MonoBehaviour
         health = monsterState.heart;
         wanderTimerCurrent = wanderTimer;
         attackTimerCurrent = 0f;
-        basicColor = rendererColor.sharedMaterial.color;
+        basicColor = rendererColor.material.color;
         changeColor = Color.softRed;
         // 초기 속도 설정
         agent.speed = monsterState.moveSpeed;
@@ -199,7 +200,7 @@ public class MonsterAI : MonoBehaviour
     public void Damaged(float value)
     {
         health -= value;
-        
+        damageParticle.Play();
         if(health <= 0)
         {
             playerControl.isMonster = false;
@@ -307,6 +308,6 @@ public class MonsterAI : MonoBehaviour
     void ChangeColor(Color c)
     {
         Debug.Log("색변환");
-        rendererColor.sharedMaterial.color = c;
+        rendererColor.material.color = c;
     }
 }
