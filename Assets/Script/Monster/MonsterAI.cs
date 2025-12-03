@@ -282,6 +282,7 @@ public class MonsterAI : MonoBehaviour
     // Gizmo로 감지 범위 표시
     void OnDrawGizmosSelected()
     {
+        
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, monsterState.wanderRadius);
         

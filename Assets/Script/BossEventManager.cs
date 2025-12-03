@@ -14,20 +14,27 @@ public class BossEventManager : MonoBehaviour
 
         if (EventEffect != null)
         {
+            EventEffect.gameObject.SetActive(true);
+            EventEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             EventEffect.Play();
         }
     }
-    
-    public void TryActivateBoss()
+
+    public void PlayerEnteredZone()
     {
-        if (pressedButtonCount == 3 && bossController.isActivated == false)
+        if (pressedButtonCount == 3)
         {
-            Debug.Log("보스 활성화");
-            bossController.isActivated = true;
+            Debug.Log("보스 구역 진입. 공격 시작");
+            if (bossController != null) bossController.isActivated = true;
         }
-        else if (pressedButtonCount < 3)
+    }
+
+    public void PlayerExitedZone()
+    {
+        if (bossController != null && bossController.isActivated)
         {
-            Debug.Log("아직 버튼이 모두 눌리지 않았음 (" + pressedButtonCount + " / 3)");
+            Debug.Log("보스 구역 이탈. 공격 중지...");
+            bossController.isActivated = false;
         }
     }
 }

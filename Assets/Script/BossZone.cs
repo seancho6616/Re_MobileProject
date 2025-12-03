@@ -7,7 +7,15 @@ public class BossZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (eventManager != null) eventManager.TryActivateBoss();
+            if (eventManager != null) eventManager.PlayerEnteredZone();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (eventManager != null) eventManager.PlayerExitedZone();
         }
     }
 }

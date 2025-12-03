@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MonsterState", menuName = "Scriptable Objects/MonsterState")]
 public class MonsterState : ScriptableObject
 {
-    public enum Type { Slime1, Slime2 }
+    public enum Type { Slime1, Slime2, FrogBoss }
     public Type type;
     [Header("Basic Infomation")]
     public float heart;

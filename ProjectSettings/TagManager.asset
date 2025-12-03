@@ -11,6 +11,7 @@ TagManager:
   - DisHeart
   - Weapon
   - Monster
+  - Boss
   layers:
   - Default
   - TransparentFX
