@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
 using System.Security.Cryptography;
-using UnityEditor.Callbacks;
 
 public class BossPattern1 : MonoBehaviour
 {
