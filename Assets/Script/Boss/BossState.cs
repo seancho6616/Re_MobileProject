@@ -1,20 +1,28 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossState : MonoBehaviour
 {
     public int maxHealth = 32;
     private int currentHealth;
 
-    public float damageCooldown = 1.0f;
+    public float damageCooldown = 1.5f;
     private float lastDamageTime = 0;
 
-    public Animator playerAnimator; 
+    public Animator playerAnimator;
+    public Slider BossHeartBar;
 
     public string realAttackName = "Armature_Attack1";
 
     void Start()
     {
         currentHealth = maxHealth;
+
+        if (BossHeartBar != null)
+        {
+            BossHeartBar.maxValue = maxHealth;
+            BossHeartBar.value = currentHealth;
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -56,6 +64,11 @@ public class BossState : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log("공격 성공. 남은 체력: " + currentHealth);
+
+        if (BossHeartBar != null)
+        {
+            BossHeartBar.value = currentHealth;
+        }
 
         if (currentHealth <= 0)
         {
