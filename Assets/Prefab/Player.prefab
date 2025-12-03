@@ -5882,9 +5882,6 @@ PrefabInstance:
       addedObject: {fileID: 2828439369549403557}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 799edbbf3957cde4f9ae7e044ed2bc83, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5616865658566032147}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 799edbbf3957cde4f9ae7e044ed2bc83, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7862222261994464415}
   m_SourcePrefab: {fileID: 100100000, guid: 799edbbf3957cde4f9ae7e044ed2bc83, type: 3}
 --- !u!1 &5032476196822650977 stripped
@@ -6055,6 +6052,7 @@ MonoBehaviour:
   pickupChest: 0
   isWeapon: 0
   checkMonster: {fileID: 1832417703996538551}
+  monsterAI: {fileID: 0}
   isMonster: 0
 --- !u!114 &9015171856751807672
 MonoBehaviour:
@@ -6119,20 +6117,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &5616865658566032147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5032476196822650977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262af21f7fa7209448c6b61248f7c0a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  menuBGM: {fileID: 0}
-  mainBGM: {fileID: 0}
 --- !u!82 &7862222261994464415
 AudioSource:
   m_ObjectHideFlags: 0

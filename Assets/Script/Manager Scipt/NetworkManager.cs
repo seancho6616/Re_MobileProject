@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     public bool isContinue = false;
 
     [Header("Network Settings")]
-    private string baseUrl = "http://localhost:3000/api";
+    private string baseUrl = "https://throatier-paulita-unprevalent.ngrok-free.dev/api";
     public string authToken;
 
     void Awake()

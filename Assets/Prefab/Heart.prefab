@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 678698aac3ef6d342bffd735a3372d4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.63
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 678698aac3ef6d342bffd735a3372d4b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -125,6 +125,9 @@ PrefabInstance:
       addedObject: {fileID: 928843073377939828}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 678698aac3ef6d342bffd735a3372d4b, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3575660528578612191}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 678698aac3ef6d342bffd735a3372d4b, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 5563373523005512264}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 678698aac3ef6d342bffd735a3372d4b, type: 3}
       insertIndex: -1
@@ -221,6 +224,19 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &3575660528578612191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101830404852204870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad912eb5dbd47e4c90918cc578d0ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartUI
+  fillImage: {fileID: 0}
 --- !u!114 &5563373523005512264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,3 +280,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemState: {fileID: 11400000, guid: f9f2f6dcf5b322d42b89eecae2b41456, type: 2}
   rotateSpeed: 20
+  audioSource: {fileID: 0}
