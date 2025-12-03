@@ -1,54 +1,101 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; 
 
 public class StartSceneManager : MonoBehaviour
 {
-    // 이어하기
-    public void OnClickContinue()
-    {
-        Sound.instance.PlayClick();
-        Debug.Log("이어하기 시도: 서버에서 데이터를 불러옵니다...");
+    [Header("Main UI")]
+    public Button continueButton;   // 이어하기 버튼
 
+    [Header("Popups")]
+    public GameObject warningPopup; // 경고창
+    public GameObject settingPanel; // 설정창 (여기에 텍스트 다 넣을 예정)
+
+    private bool canContinue = false; 
+
+    void Start()
+    {
+        // 시작할 때 팝업 끄기
+        if (warningPopup != null) warningPopup.SetActive(false);
+        if (settingPanel != null) settingPanel.SetActive(false);
+        
+        if (continueButton != null) continueButton.interactable = true;
+
+        // 서버 데이터 조회
         StartCoroutine(NetworkManager.Instance.LoadGameData((data) =>
         {
             if (data != null)
             {
-                Debug.Log("데이터 로드 성공! GameDataStore에 싣습니다.");
+                if (data.position == null) data.position = new PositionData(0, 0, 0);
 
-                // 2. GameDataStore가 없으면 임시로 생성
                 if (GameDataStore.Instance == null)
                 {
                     GameObject go = new GameObject("GameDataStore");
                     go.AddComponent<GameDataStore>();
                 }
-
                 GameDataStore.Instance.cachedData = data;
-                GameDataStore.Instance.isContinue = true;
 
-                // 저장된 마지막 씬으로 이동 (저장된 게 없으면 MainScene)
-                string sceneToLoad = string.IsNullOrEmpty(data.lastScene) ? "MainScene" : data.lastScene;
-                SceneManager.LoadScene(sceneToLoad);
+                if (data.hasPlayed == false) canContinue = false; 
+                else canContinue = true;
             }
-            else
-            {
-                Debug.LogError("서버에 저장된 데이터가 없습니다.");
-            }
+            else canContinue = false; 
         }));
     }
 
-    // 새 게임
+    // --- 메인 버튼 ---
+    public void OnClickContinue()
+    {
+        Sound.instance.PlayClick();
+        if (canContinue == false)
+        {
+            if (warningPopup != null) warningPopup.SetActive(true);
+            return; 
+        }
+        GameDataStore.Instance.isContinue = true;
+        string sceneToLoad = GameDataStore.Instance.cachedData.lastScene;
+        if (string.IsNullOrEmpty(sceneToLoad) || sceneToLoad == "StartArea") sceneToLoad = "MainScene";
+        SceneManager.LoadScene(sceneToLoad);
+    }
+
     public void OnClickNewGame()
     {
         Sound.instance.PlayClick();
-        Debug.Log("새 게임 시작");
-
-        if (GameDataStore.Instance != null)
-        {
-            GameDataStore.Instance.isContinue = false;
-            GameDataStore.Instance.cachedData = null;
-        }
-
-        // 바로 게임 씬으로 이동
+        GameDataStore.Instance.isContinue = false;
+        GameDataStore.Instance.cachedData = null;
         SceneManager.LoadScene("MainScene");
+    }
+
+    public void OnClickClosePopup()
+    {
+        Sound.instance.PlayClick();
+        if (warningPopup != null) warningPopup.SetActive(false);
+    }
+
+    // --- 설정창 기능 ---
+
+    // 1. 설정창 열기
+    public void OnClickOpenSettings()
+    {
+        Sound.instance.PlayClick();
+        if (settingPanel != null) settingPanel.SetActive(true);
+    }
+
+    // 2. 설정창 닫기 (X 버튼)
+    public void OnClickCloseSettings()
+    {
+        Sound.instance.PlayClick();
+        if (settingPanel != null) settingPanel.SetActive(false);
+    }
+
+    // 3. 로그아웃 (왼쪽 위 버튼)
+    public void OnClickLogout()
+    {
+        Sound.instance.PlayClick();
+        Debug.Log("로그아웃");
+
+        if (NetworkManager.Instance != null) NetworkManager.Instance.authToken = null;
+        if (GameDataStore.Instance != null) GameDataStore.Instance.cachedData = null;
+
+        SceneManager.LoadScene("LoginScene");
     }
 }
