@@ -1,18 +1,22 @@
 using UnityEngine;
-using TMPro; // ★ TMP 필수
+using TMPro; 
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LoginUIManager : MonoBehaviour
 {
-    [Header("Panels (패널 오브젝트)")]
-    public GameObject loginPanel;   // Login_Panel 오브젝트
-    public GameObject signinPanel;  // Signin_Panel 오브젝트
+    [Header("Panels")]
+    public GameObject loginPanel;
+    public GameObject signinPanel;
+
+    [Header("Popup UI")]
+    public GameObject noticePopup;       // 팝업창 전체 오브젝트
+    public TextMeshProUGUI noticeText;   // 팝업창 텍스트
+    public Button noticeCloseButton;     // 팝업 닫기 버튼
 
     [Header("Login UI")]
     public TMP_InputField loginIdInput;
     public TMP_InputField loginPwInput; 
-    
     public Button loginButton;
     public Button goToRegisterButton;
 
@@ -20,29 +24,30 @@ public class LoginUIManager : MonoBehaviour
     public TMP_InputField regIdInput;   
     public TMP_InputField regPwInput;
     public TMP_InputField regNickInput;
-    
     public Button registerSubmitButton;
 
     void Start()
     {
-        // 초기 화면 설정 (로그인 창만 보이고, 회원가입 창은 숨김)
+        // 초기 화면 설정
         loginPanel.SetActive(true);
         signinPanel.SetActive(false);
+        
+        // 시작할 때 팝업 꺼두기
+        if(noticePopup != null) noticePopup.SetActive(false);
 
-        // 버튼 기능 연결
+        // 버튼 리스너 연결
         loginButton.onClick.AddListener(OnLoginClick);
         goToRegisterButton.onClick.AddListener(ShowRegisterPanel);
         registerSubmitButton.onClick.AddListener(OnRegisterSubmitClick);
+        
+        if(noticeCloseButton != null) noticeCloseButton.onClick.AddListener(ClosePopup);
     }
 
-    // 패널 전환 로그인 <-> 회원가입
     void ShowRegisterPanel()
     {
-        // 로그인 창 숨기고, 회원가입 창 보여주기
         loginPanel.SetActive(false);
         signinPanel.SetActive(true);
-        
-        // 가입 창 열 때 입력 칸 초기화
+        // 입력 필드 초기화
         regIdInput.text = "";
         regPwInput.text = "";
         regNickInput.text = "";
@@ -50,12 +55,31 @@ public class LoginUIManager : MonoBehaviour
 
     void ShowLoginPanel()
     {
-        // 회원가입 창 숨기고, 로그인 창 보여주기
         signinPanel.SetActive(false);
         loginPanel.SetActive(true);
     }
 
-    // 로그인 요청
+    // --- 팝업 함수 ---
+    void ShowPopup(string message)
+    {
+        if (noticePopup != null && noticeText != null)
+        {
+            noticeText.text = message; 
+            noticePopup.SetActive(true); 
+        }
+        else
+        {
+            // 팝업 UI가 연결 안 되어 있을 때를 대비해 로그도 출력
+            Debug.Log("알림: " + message);
+        }
+    }
+
+    void ClosePopup()
+    {
+        if (noticePopup != null) noticePopup.SetActive(false);
+    }
+
+    // --- 로그인 요청 ---
     void OnLoginClick()
     {
         Sound.instance.PlayClick();
@@ -64,21 +88,29 @@ public class LoginUIManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pw))
         {
-            Debug.Log("로그인 실패, 아이디와 비밀번호를 입력하세요.");
+            ShowPopup("아이디와 비밀번호를 입력하세요.");
             return;
         }
 
-        StartCoroutine(NetworkManager.Instance.Login(id, pw, (isSuccess) =>
+        // [수정 완료] (isSuccess, errorMsg) 2개의 인자를 받도록 처리
+        StartCoroutine(NetworkManager.Instance.Login(id, pw, (isSuccess, errorMsg) =>
         {
             if (isSuccess)
             {
-                Debug.Log("로그인 성공, 게임 씬으로 이동");
+                Debug.Log("로그인 성공");
                 SceneManager.LoadScene("StartScene"); 
+            }
+            else
+            {
+                // 실패 시 에러 메시지 팝업
+                // 서버에서 메시지가 안 왔을 경우를 대비한 기본 문구
+                if (string.IsNullOrEmpty(errorMsg)) errorMsg = "아이디 또는 비밀번호가 틀렸습니다.";
+                ShowPopup(errorMsg);
             }
         }));
     }
 
-    // 회원가입 요청
+    // --- 회원가입 요청 ---
     void OnRegisterSubmitClick()
     {
         Sound.instance.PlayClick();
@@ -88,20 +120,29 @@ public class LoginUIManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pw) || string.IsNullOrEmpty(nick))
         {
-            Debug.Log("회원가입 실패, 모든 정보를 입력해주세요.");
+            ShowPopup("모든 정보를 입력해주세요.");
             return;
         }
 
-        StartCoroutine(NetworkManager.Instance.Register(id, pw, nick, (isSuccess) =>
+        // [수정 완료] (isSuccess, errorMsg) 2개의 인자를 받도록 처리
+        StartCoroutine(NetworkManager.Instance.Register(id, pw, nick, (isSuccess, errorMsg) =>
         {
             if (isSuccess)
             {
-                Debug.Log("가입 성공, 로그인 화면으로 돌아갑니다.");
+                ShowPopup("가입 성공! 로그인 해주세요.");
                 ShowLoginPanel(); 
             }
             else
             {
-                Debug.Log("가입 실패, 중복을 확인하세요.");
+                // "중복" 에러 처리 (서버 메시지 또는 코드 11000 체크)
+                if (errorMsg.Contains("중복") || errorMsg.Contains("사용 중") || errorMsg.Contains("11000"))
+                {
+                    ShowPopup("이미 존재하는 아이디입니다.");
+                }
+                else
+                {
+                    ShowPopup(errorMsg);
+                }
             }
         }));
     }
