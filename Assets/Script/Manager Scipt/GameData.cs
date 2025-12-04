@@ -3,7 +3,7 @@ using System;
 [Serializable]
 public class GameData
 {
-    public bool hasPlayed; 
+    public bool hasPlayed; // 기존 플레이 기록이 있는지
 
     // 씬 및 위치 정보
     public string lastScene;
